@@ -8,7 +8,19 @@ import (
 	"net"
 )
 
-const PORT = ":6379"
+const PORT = ":1521"
+
+type Version uint
+
+const (
+	V1 Version = iota + 1
+)
+
+type Message struct {
+	Size    uint
+	Version Version
+	Message string
+}
 
 func main() {
 	ln, err := net.Listen("tcp", PORT)
@@ -36,6 +48,8 @@ func main() {
 			log.Panicf("Unable to read from client: %v", err)
 		}
 
-		conn.Write([]byte("+OK\r\n"))
+		fmt.Printf("----Recieved----\n%s\n", buf)
+
+		// conn.Write([]byte("+OK\r\n"))
 	}
 }
