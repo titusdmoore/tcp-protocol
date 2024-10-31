@@ -35,6 +35,7 @@ func main() {
 	defer conn.Close()
 
 	fmt.Printf("Listening on Port %s\n", PORT)
+    message := []byte{}
 
 	for {
 		buf := make([]byte, 1024)
@@ -49,7 +50,10 @@ func main() {
 		}
 
 		fmt.Printf("----Recieved----\n%s\n", buf)
+        message = append(message, buf...)
 
 		// conn.Write([]byte("+OK\r\n"))
 	}
+
+    fmt.Printf("Received Message with length of: %d", len(message))
 }
